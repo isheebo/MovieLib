@@ -1,4 +1,4 @@
-from movie_rental.genre import Genre
+# from movie_rental.genre import Genre
 
 
 class Movie:
@@ -11,7 +11,7 @@ class Movie:
     def __init__(self, title, duration, genre, release_year, actors=[]):
         self.title = title
         self.duration = duration
-        self.genre = genre if issubclass(genre, Genre) else None
+        self.genre = genre
         self.release_year = release_year
         self.__actors = actors
 

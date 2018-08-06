@@ -11,7 +11,7 @@ class Genre:
 
 class Romance(Genre):
     def __init__(self):
-        super(Romance, self).__init__(
+        super(self.__class__, self).__init__(
             self.__class__.__name__, "Disguised Chilli sauce/peppe"
         )
 
