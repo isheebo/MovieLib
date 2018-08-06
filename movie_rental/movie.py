@@ -17,3 +17,6 @@ class Movie:
 
     def actors(self):
         return self.__actors
+
+    def set_actors(self, actors):
+        self.__actors = actors

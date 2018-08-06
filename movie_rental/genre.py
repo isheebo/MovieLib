@@ -44,5 +44,5 @@ class Comedy(Genre):
     def __init__(self):
         super(Comedy, self).__init__(
             self.__class__.__name__,
-            "Laughter is for the cowards"
+            "Laughter is for the heart"
         )
