@@ -11,14 +11,14 @@ class Genre:
 
 class Romance(Genre):
     def __init__(self):
-        super(self.__class__, self).__init__(
+        super().__init__(
             self.__class__.__name__, "Disguised Chilli sauce/peppe"
         )
 
 
 class Adventure(Genre):
     def __init__(self):
-        super(Adventure, self).__init__(
+        super().__init__(
             self.__class__.__name__,
             "Walks in parks is all"
         )
@@ -26,7 +26,7 @@ class Adventure(Genre):
 
 class Horror(Genre):
     def __init__(self):
-        super(Horror, self).__init__(
+        super().__init__(
             self.__class__.__name__,
             "Good enough to test whether your boyfriend is a coward"
         )
@@ -34,7 +34,7 @@ class Horror(Genre):
 
 class Thriller(Genre):
     def __init__(self):
-        super(Thriller, self).__init__(
+        super().__init__(
             self.__class__.__name__,
             "The kind that keeps you at the edge of your seat"
         )
@@ -42,7 +42,7 @@ class Thriller(Genre):
 
 class Comedy(Genre):
     def __init__(self):
-        super(Comedy, self).__init__(
+        super().__init__(
             self.__class__.__name__,
             "Laughter is for the heart"
         )
