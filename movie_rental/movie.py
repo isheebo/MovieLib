@@ -20,3 +20,9 @@ class Movie:
 
     def set_actors(self, actors):
         self.__actors = actors
+
+    def __repr__(self):
+        return f"{self.title} - {self.release_year}"
+
+    def __str__(self):
+        return self.title
