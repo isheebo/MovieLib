@@ -1,6 +1,6 @@
 import unittest
 
-from movie_rental.library import MovieLibrary, Movie
+from movie_rental.library import MovieLibrary, Movie, GenreError
 from movie_rental.genre import Thriller
 
 class MovieLibraryTestCases(unittest.TestCase):
@@ -18,6 +18,16 @@ class MovieLibraryTestCases(unittest.TestCase):
         self.movie_library.add_movie(**self.sample_movie_details)
         self.assertIn(self.sample_movie_details['title'].lower(), self.movie_library.all_movie_titles)
         self.assertEqual(len(self.movie_library.all_movie_titles), 1)
+
+    def test_cant_add_movie_with_invalid_genre(self):
+        movie_details = self.sample_movie_details
+        movie_details['genre'] = "Bad Genre"
+        self.assertRaises(GenreError, self.movie_library.add_movie, **movie_details)
+
+        # this test can as well be written like this
+        with self.assertRaises(GenreError):
+            self.movie_library.add_movie(**movie_details)
+        
 
     def test_movies_are_stored_as_movie_instances(self):
         self.movie_library.add_movie(**self.sample_movie_details)

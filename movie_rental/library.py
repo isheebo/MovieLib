@@ -1,6 +1,9 @@
 from movie_rental.genre import Genre
 from movie_rental.movie import Movie
 
+class GenreError(TypeError):
+    pass
+
 
 class MovieLibrary:
     """
@@ -19,6 +22,10 @@ class MovieLibrary:
 
     def add_movie(self, title, duration, genre, release_year, actors=[]):
         title = title.lower()
+
+        if not (isinstance(genre, Genre)):
+            raise GenreError('Invalid Genre')
+
         movie = Movie(title, duration, genre, release_year, actors)
 
         if title in self.movies:
