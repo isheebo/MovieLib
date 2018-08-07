@@ -80,13 +80,9 @@ class MovieLibrary:
 
 
     def movies_released_in(self, year):
-        movies_for_year = []
+        # extract titles later
 
-        for movie in self.movies.values():
-            if movie.year == year:
-                movies_for_year.append(movie)  # extract titles later
-
-        return [movie.title for movie in movies_for_year]
+        return [movie.title for movie in self.movies.values() if movie.release_year == year]
 
     def get_movie_by_title(self,title):
         return self.movies.get(title)

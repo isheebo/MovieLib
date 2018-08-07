@@ -1,9 +1,8 @@
-import unittest
-
+from tests import BaseTestCase
 from movie_rental.library import MovieLibrary, Movie, GenreError
 from movie_rental.genre import Thriller
 
-class MovieLibraryTestCases(unittest.TestCase):
+class MovieLibraryTestCases(BaseTestCase):
     def setUp(self):
         self.movie_library = MovieLibrary()
         self.sample_movie_details = {
@@ -43,16 +42,21 @@ class MovieLibraryTestCases(unittest.TestCase):
         self.movie_library.add_movie(**self.sample_movie_details)
         self.assertTrue(movie_title == self.movie_library.get_movie_by_title(movie_title)['title'])
 
-    def test_movie_genre_should_be_of_instance_genre(self):
-        pass
-
     def test_can_get_movies_released_in_a_year(self):
-        pass
+        # try getting movies in 2018 and get back an empty list
+        movies_2018 = self.movie_library.movies_released_in('2018')
+        self.assertEqual(len(movies_2018), 0)
+
+        # add some movies to the library
+        self.add_movies_to_a_library(self.movie_library)
+        # get all movies by the year 2018
+        movies_2018 = self.movie_library.movies_released_in('2018')
+        self.assertEqual(len(movies_2018), 2)
+
+    def test_can_rent_out_movie(self):
+        pass   
 
     def test_cant_rent_out_an_out_of_stock_movie(self):
-        pass
-    
-    def test_can_rent_out_movie(self):
         pass
     
     def test_can_get_movies_by_genre(self):
