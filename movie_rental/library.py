@@ -53,8 +53,9 @@ class MovieLibrary:
 
         return True
 
+    @property
     def all_movie_titles(self):
-        return [title for title in self.movies]
+        return self.movies.keys()
 
     def rent_out_movie(self, title):
         title = title.lower()
@@ -70,12 +71,6 @@ class MovieLibrary:
             return [mv.title for mv in self.movies if mv.genre == genre]
         return []  # fail silently
 
-    def movies_with_title(self, title):
-        """
-        This method would be implemented if we weren't using titles
-        for keys to the storage dictionary
-        """
-        pass
 
     def movies_released_in(self, year):
         movies_for_year = []
@@ -85,3 +80,6 @@ class MovieLibrary:
                 movies_for_year.append(movie)  # extract titles later
 
         return [movie.title for movie in movies_for_year]
+
+    def get_movie_by_title(self,title):
+        return self.movies.get(title)
