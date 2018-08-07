@@ -8,8 +8,8 @@ class Genre:
         self.name = name
         self.description = description
 
-    def __eq__(self, comparator):
-        return self.name == comparator.name and self.description == comparator.description
+    def __eq__(self, other_genre):
+        return self.name == other_genre.name and self.description == other_genre.description
 
 
 class Romance(Genre):

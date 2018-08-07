@@ -99,10 +99,27 @@ class MovieLibraryTestCases(BaseTestCase):
 
     
     def test_can_delete_a_movie(self):
-        pass
+        # create a movie, and delete it, see whether its count changes
+        movie_title = self.sample_movie_details.get('title').lower()
+        self.movie_library.add_movie(**self.sample_movie_details)
+        self.assertEqual(self.movie_library.movie_count[movie_title], 1)
+
+        movie_deleted = self.movie_library.delete_movie_entry(movie_title)
+        self.assertTrue(movie_deleted)
+        self.assertEqual(self.movie_library.movie_count.get(movie_title), None)
+        self.assertFalse(self.movie_library.movies.get(movie_title)) # None is a falsy value so you can as well check it with assertFalse
+        
+
+    def test_cant_delete_absent_movie(self):
+        # delete a movie that doesn't exists and check that the opration returns false
+        movie_title = self.sample_movie_details.get('title').lower()
+        movie_deleted = self.movie_library.delete_movie_entry(movie_title)
+        self.assertFalse(movie_deleted)
 
     def can_edit_a_movie(self):
-        pass
+        # create a movie
+        movie_title = self.sample_movie_details.get('title').lower()
+
     
     def cant_edit_movie_that_doesnt_exist(self):
         pass
