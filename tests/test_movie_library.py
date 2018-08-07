@@ -14,9 +14,10 @@ class MovieLibraryTestCases(BaseTestCase):
         }
 
     def test_can_add_movie_to_the_library(self):
+        movie_title = self.sample_movie_details['title'].lower()
         self.movie_library.add_movie(**self.sample_movie_details)
-        self.assertIn(self.sample_movie_details['title'].lower(), self.movie_library.all_movie_titles)
-        self.assertEqual(len(self.movie_library.all_movie_titles), 1)
+        self.assertIn(movie_title, self.movie_library.all_movie_titles)
+        self.assertEqual(self.movie_library.movie_count[movie_title], 1)
 
     def test_cant_add_movie_with_invalid_genre(self):
         movie_details = self.sample_movie_details
