@@ -55,7 +55,14 @@ class MovieLibraryTestCases(BaseTestCase):
         self.assertEqual(len(movies_2018), 2)
 
     def test_can_rent_out_movie(self):
-        pass
+        # create a single movie, rent it out and test whether the count changes
+        movie_title = self.sample_movie_details.get('title').lower()
+        self.movie_library.add_movie(**self.sample_movie_details)
+        self.assertEqual(self.movie_library.movie_count[movie_title], 1)
+
+        is_rented = self.movie_library.rent_out_movie(movie_title)
+        self.assertTrue(is_rented)
+        self.assertEqual(self.movie_library.movie_count[movie_title], 0)
 
     def test_cant_rent_out_an_out_of_stock_movie(self):
         # try renting out a movie that doesnt exist
@@ -63,12 +70,15 @@ class MovieLibraryTestCases(BaseTestCase):
         self.assertFalse(movie_rented)
 
         # create a single movie, rent it out and test whether the second attempt fails
-        movie_title = self.sample_movie_details.get('title')
+        movie_title = self.sample_movie_details.get('title').lower()
         self.movie_library.add_movie(**self.sample_movie_details)
         first_rented = self.movie_library.rent_out_movie(movie_title)
         self.assertTrue(first_rented)
+        self.assertEqual(self.movie_library.movie_count[movie_title], 0)
+
         second_rented = self.movie_library.rent_out_movie(movie_title)
         self.assertFalse(second_rented)
+        self.assertEqual(self.movie_library.movie_count[movie_title], 0)
     
     def test_can_get_movies_by_genre(self):
         # try with no movies and get back an empty list
