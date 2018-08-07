@@ -8,6 +8,9 @@ class Genre:
         self.name = name
         self.description = description
 
+    def __eq__(self, other_genre):
+        return self.name == other_genre.name and self.description == other_genre.description
+
 
 class Romance(Genre):
     def __init__(self):

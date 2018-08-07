@@ -1,6 +1,9 @@
 from movie_rental.genre import Genre
 from movie_rental.movie import Movie
 
+class GenreError(TypeError):
+    pass
+
 
 class MovieLibrary:
     """
@@ -19,6 +22,10 @@ class MovieLibrary:
 
     def add_movie(self, title, duration, genre, release_year, actors=[]):
         title = title.lower()
+
+        if not (isinstance(genre, Genre)):
+            raise GenreError('Invalid Genre')
+
         movie = Movie(title, duration, genre, release_year, actors)
 
         if title in self.movies:
@@ -29,17 +36,17 @@ class MovieLibrary:
 
         return self.movies
 
-    def edit_movie(self, title, duration, genre, release_year, actors):
+    def edit_movie(self, title, duration=None, genre=None, release_year=None, actors=None):
         title = title.lower()
 
         if title not in self.movies:
             return False
 
         movie = self.movies[title]
-        movie.duration = duration
-        movie.genre = genre
-        movie.release_year = release_year
-        movie.set_actors(actors)
+        movie.duration = duration or movie.duration
+        movie.genre = genre or movie.genre
+        movie.release_year = release_year or movie.release_year
+        movie.set_actors(actors or movie.actors)
         return True
 
     def delete_movie_entry(self, title):
@@ -53,8 +60,9 @@ class MovieLibrary:
 
         return True
 
+    @property
     def all_movie_titles(self):
-        return [title for title in self.movies]
+        return self.movies.keys()
 
     def rent_out_movie(self, title):
         title = title.lower()
@@ -66,22 +74,16 @@ class MovieLibrary:
         return True
 
     def movies_with_genre(self, genre):
-        if issubclass(genre, Genre):
-            return [mv.title for mv in self.movies if mv.genre == genre]
-        return []  # fail silently
+        if isinstance(genre, Genre):
+            return [mv.title for mv in self.movies.values() if mv.genre == genre]
+        
+        raise GenreError('Invalid Genre')
 
-    def movies_with_title(self, title):
-        """
-        This method would be implemented if we weren't using titles
-        for keys to the storage dictionary
-        """
-        pass
 
     def movies_released_in(self, year):
-        movies_for_year = []
+        # extract titles later
 
-        for movie in self.movies.values():
-            if movie.year == year:
-                movies_for_year.append(movie)  # extract titles later
+        return [movie.title for movie in self.movies.values() if movie.release_year == year]
 
-        return [movie.title for movie in movies_for_year]
+    def get_movie_by_title(self,title):
+        return self.movies.get(title)
