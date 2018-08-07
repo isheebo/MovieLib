@@ -36,17 +36,17 @@ class MovieLibrary:
 
         return self.movies
 
-    def edit_movie(self, title, duration, genre, release_year, actors):
+    def edit_movie(self, title, duration=None, genre=None, release_year=None, actors=None):
         title = title.lower()
 
         if title not in self.movies:
             return False
 
         movie = self.movies[title]
-        movie.duration = duration
-        movie.genre = genre
-        movie.release_year = release_year
-        movie.set_actors(actors)
+        movie.duration = duration or movie.duration
+        movie.genre = genre or movie.genre
+        movie.release_year = release_year or movie.release_year
+        movie.set_actors(actors or movie.actors)
         return True
 
     def delete_movie_entry(self, title):

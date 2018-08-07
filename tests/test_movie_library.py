@@ -1,6 +1,6 @@
 from tests import BaseTestCase
 from movie_rental.library import MovieLibrary, Movie, GenreError
-from movie_rental.genre import Thriller
+from movie_rental.genre import Thriller, Romance
 
 class MovieLibraryTestCases(BaseTestCase):
     def setUp(self):
@@ -119,10 +119,24 @@ class MovieLibraryTestCases(BaseTestCase):
     def can_edit_a_movie(self):
         # create a movie
         movie_title = self.sample_movie_details.get('title').lower()
+        self.movie_library.add_movie(movie_title)
+        self.assertIn(movie_title, self.movie_library.all_movie_titles)
 
+        duration = 120
+        genre=Romance()
+        is_edited = self.movie_library.edit_movie(movie_title, duration=duration, genre=genre)
+        self.assertTrue(is_edited)
+        # get the movie and test whether its duration and genre have changed
+        movie = self.movie_library.get_movie_by_title(movie_title)
+        self.assertEqual(movie.duration, duration)
+        self.assertEqual(genre, movie,genre)
+        
     
     def cant_edit_movie_that_doesnt_exist(self):
-        pass
+        # edit a movie that doesn't exist and return back false
+        movie_title = self.sample_movie_details.get('title').lower()
+        is_edited = self.movie_library.edit_movie(movie_title, duration=duration, genre=genre)
+        self.assertFalse(is_edited)
 
     def tearDown(self):
         self.movie_library = None
