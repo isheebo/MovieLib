@@ -74,9 +74,10 @@ class MovieLibrary:
         return True
 
     def movies_with_genre(self, genre):
-        if issubclass(genre, Genre):
-            return [mv.title for mv in self.movies if mv.genre == genre]
-        return []  # fail silently
+        if isinstance(genre, Genre):
+            return [mv.title for mv in self.movies.values() if mv.genre == genre]
+        
+        raise GenreError('Invalid Genre')
 
 
     def movies_released_in(self, year):

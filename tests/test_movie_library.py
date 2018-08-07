@@ -55,13 +55,28 @@ class MovieLibraryTestCases(BaseTestCase):
         self.assertEqual(len(movies_2018), 2)
 
     def test_can_rent_out_movie(self):
-        pass   
+          pass
 
     def test_cant_rent_out_an_out_of_stock_movie(self):
         pass
     
     def test_can_get_movies_by_genre(self):
-        pass
+        # try with no movies and get back an empty list
+        thrillers = self.movie_library.movies_with_genre(Thriller())
+        self.assertEqual(thrillers, [])
+
+        # add some movies and get thrillers
+        # the movies we are adding have two thrillers i.e 'mission impossibles and bourne'
+        expected_thrillers = ['mission impossible: fall out', 'bourne']
+        self.add_movies_to_a_library(self.movie_library)
+        thrillers = self.movie_library.movies_with_genre(Thriller())
+        self.assertEqual(thrillers, expected_thrillers)
+
+    def test_cant_get_movie_by_genre_with_invalid_genre(self):
+        with self.assertRaises(GenreError):
+            self.movie_library.movies_with_genre('Bad Genre')
+
+
     
     def test_can_delete_a_movie(self):
         pass
